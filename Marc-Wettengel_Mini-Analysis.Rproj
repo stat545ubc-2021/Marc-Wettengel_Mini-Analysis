@@ -1,0 +1,89 @@
+---
+title: "Mini Analysis 1"
+Author: "Marc Wettengel"
+output: html_document
+---
+
+#1 Choosing a data set
+
+##1.1
+```{r, include = FALSE}
+library(datateachr)
+library(tidyverse)
+library(dplyr)
+library(ggplot2)
+```
+
+From reading the descriptions of the various datasets included in the 'datateachr' package, these 4 data sets are of most interest to me:
+
+1.vancouver_trees
+2.flow_sample
+3.parking_meters
+4.building_permits
+
+##1.2 exploring attributes of data 
+
+```{r}
+head(vancouver_trees)
+```
+
+```{r}
+head(flow_sample)
+```
+
+```{r}
+head(parking_meters)
+```
+
+```{r}
+head(building_permits)
+```
+
+##1.3
+The two datasets that strike the most interest to me are Vancouver_trees and flow_sample. vancouver_trees provides a lot of unique variables, including location which can allow for spatial analysis. flow_sample I find to be interesting since it's including extreme events and it has a time dimenstion. 
+
+##1.4 
+Both of these data sets create various unique questions, but based on my personal interests and background knowledge I find myself more intreigued by the vancouver_trees dataset. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
