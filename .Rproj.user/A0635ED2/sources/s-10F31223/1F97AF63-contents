@@ -1,0 +1,171 @@
+---
+title: "Mini Data Analysis 1"
+Author: "Marc Wettengel"
+Date: "October 16, 2021"
+output:
+  html_document:
+    keep_md: yes
+---
+
+
+# 1 Choosing a data set
+
+## 1.1
+```{r, include = FALSE}
+library(datateachr)
+library(tidyverse)
+library(dplyr)
+library(ggplot2)
+```
+
+From reading the descriptions of the various datasets included in the 'datateachr' package, these 4 data sets are of most interest to me:
+
+1.vancouver_trees
+2.flow_sample
+3.parking_meters
+4.building_permits
+
+## 1.2 exploring attributes of data 
+
+```{r}
+head(vancouver_trees)
+glimpse(vancouver_trees)
+unique(vancouver_trees)
+```
+```{r}
+
+unique(vancouver_trees$neighbourhood_name)
+unique(vancouver_trees$genus_name)
+```
+
+```{r}
+head(flow_sample)
+glimpse(flow_sample)
+```
+
+```{r}
+head(parking_meters)
+```
+
+```{r}
+head(building_permits)
+```
+
+## 1.3
+The two datasets that strike the most interest to me are Vancouver_trees and flow_sample. vancouver_trees provides a lot of unique variables, including location which can allow for spatial analysis. flow_sample I find to be interesting since it's including extreme events and it has a time dimenstion. 
+
+## 1.4 
+Both of these data sets create various unique questions, but based on my personal interests and background knowledge I find myself more intreigued by the vancouver_trees dataset. WIth this dataset, there's a lot of opportunities to explore a wide variety of atributes such as location and tree species in the Vancouver metro area. 
+
+
+# 2 Exploring the dataset
+
+
+## 2.1
+```{r}
+#Creating a new variable vancouver_trees dataset. Just want to extract the year portion of the date planted. 
+vancouver_trees$year <- as.Date(vancouver_trees$date_planted, format = "%Y-%m-%d")
+vancouver_trees$Year <- as.numeric(format(vancouver_trees$year, '%Y'))
+head(vancouver_trees)
+
+#This is the only way how I got it to work since I didn't want to alter the original date planted column so what I want to do now is delete the "year" column! And while I'm at it I'll rename the dataset to be a more simple name.
+Trees <-subset(vancouver_trees, select = -c(year))
+
+#Now that I got the date as a year, I want to see the relationship between year and tree diameter. I'll use a scatterplot to best view the relationship.
+ggplot(vancouver_trees, aes(x=Year, y=diameter)) +
+  geom_point()
+```
+
+## 2.2
+
+```{r}
+# looking to see the number of trees for each species, creating a frequency plot based on tree species
+# This plot shows that there is a fairly consistent count between species, however, there are a couple potential outliers to keep in mind depending on future analysis
+Trees %>% 
+  ggplot(aes(common_name)) +
+  geom_bar() +
+  theme_bw()
+```
+
+## 2.3
+
+```{r}
+#Instead of looking at all tree species in this dataset, I decided to filter the dataset and look more directly at a specific genus that's included. I chose to do this based off the high number of individual species making any single analysis task difficult and there are most likely different patterns between species so any analysis may POTENTIALLY be inconclusisve. 
+#Used unique() command to see all possible genus names in the dataset
+
+unique(Trees$genus_name)
+
+#recognize a few genus names such as fagus(beech), tsuga(select conifers) and others. Used website ontariotrees.com/main/list_genus.php to further research what species may be contained in each genus.
+#going to create 2 new datasets. One will contain the genus quercus and the other will be pinus This will simplify analysis later on and Create the opportunity for comparison between evergreens (pinus entails pine trees) and deciduous species (as quercus genus are oak trees)
+
+quercusgenus <- Trees %>% filter(genus_name=="QUERCUS")
+pinusgenus <- Trees %>% filter(genus_name == "PINUS")
+print(quercusgenus)
+print(pinusgenus)
+
+```
+
+## 2.4
+
+```{r}
+# Want to compare a specific trait between each species of tree in the Quercus and Pinus genus. Chose to compare height range since it is one of only 2 numerical variables specific to physical attributes of the trees. Diameter being the second. 
+# Ridge plot seemed to be the most practical!
+
+ggplot(quercusgenus, aes(height_range_id, species_name)) +
+  ggridges::geom_density_ridges(aes(fill = species_name))
+
+ggplot(pinusgenus, aes(height_range_id, species_name)) +
+  ggridges::geom_density_ridges(aes(fill = species_name))
+
+# Just to explore height differences of trees between neighborhoods 
+ggplot(Trees, aes(height_range_id, neighbourhood_name)) +
+  ggridges::geom_density_ridges(aes(fill = neighbourhood_name)) +
+  theme(legend.position = "none")
+```
+
+```{r}
+# Repeated what was done previously, but wanted to see relationship with diameter instead of height. Since height_range_id broken up into heigh classes and not a direct measurement of height, technically the height used in this dataset is categorical. 
+ggplot(quercusgenus, aes(diameter, species_name)) +
+  ggridges::geom_density_ridges(aes(fill = species_name))
+
+ggplot(pinusgenus, aes(diameter, species_name)) +
+  ggridges::geom_density_ridges(aes(fill = species_name))
+
+ggplot(Trees, aes(diameter, neighbourhood_name)) +
+  ggridges::geom_density_ridges(aes(fill = neighbourhood_name)) +
+  theme(legend.position = "none")
+
+#one thing I noticed is there may be some ouliers present in the datasets and is why the scale on the X-axis is so large for what the majority of the data falls into for the quercus and neighbourhood plots. Decided to shrink x-axis scale to see the relationship better in the quercus and neighbourhood datasets.
+
+ggplot(quercusgenus, aes(diameter, species_name)) +
+  ggridges::geom_density_ridges(aes(fill = species_name)) +
+  xlim(0,100)
+
+ggplot(Trees, aes(diameter, neighbourhood_name)) +
+  ggridges::geom_density_ridges(aes(fill = neighbourhood_name)) +
+  theme(legend.position = "none") +
+  xlim(0, 50)
+
+#We can see how all the ridge plots for the tree daimeters for each neighbourhood are all right-skewed. This is expected because with such a variety of tree species present, there are going to be some that are much larger than the average tree. But It's right skewed becasue you cannot have a tree diameter lower that 0 but, theoretically, there is no upper limit.  
+```
+
+# 3 potential Research Questions
+
+### 3.1
+How does tree density vary in each neighbourhood?
+
+### 3.2
+Are there patterns to the distribution of genus is Vancouver's neighbourhoods?
+
+### 3.3
+Are there relationships, and are they different between genus, between year planted and diameter of tree?
+
+### 3.4
+Are certain trees more likely to be found on specific streets in Vancouver? Are there other random relationships  such as taller trees being located on odd or even side street names? 
+
+
+
+
+
+
+

@@ -1,0 +1,25 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1634443331653.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3105321135",
+    "id" : "1F97AF63",
+    "lastKnownWriteTime" : 1634443886,
+    "last_content_update" : 1634443886777,
+    "path" : "C:/Users/marco/OneDrive/Desktop/STAT 545A/Marc-Wettengel-Mini-Analysis/Mini-Analysis-Milestone1.Rmd",
+    "project_path" : "Mini-Analysis-Milestone1.Rmd",
+    "properties" : {
+        "cursorPosition" : "163,183",
+        "scrollLine" : "145"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}
