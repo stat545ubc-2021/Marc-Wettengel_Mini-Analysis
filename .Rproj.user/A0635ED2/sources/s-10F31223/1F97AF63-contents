@@ -2,9 +2,7 @@
 title: "Mini Data Analysis 1"
 Author: "Marc Wettengel"
 Date: "October 16, 2021"
-output:
-  html_document:
-    keep_md: yes
+output: github_document 
 ---
 
 
@@ -152,7 +150,7 @@ ggplot(Trees, aes(diameter, neighbourhood_name)) +
 # 3 potential Research Questions
 
 ### 3.1
-How does tree density vary in each neighbourhood?
+How does tree density vary in each neighbourhood?  
 
 ### 3.2
 Are there patterns to the distribution of genus is Vancouver's neighbourhoods?
