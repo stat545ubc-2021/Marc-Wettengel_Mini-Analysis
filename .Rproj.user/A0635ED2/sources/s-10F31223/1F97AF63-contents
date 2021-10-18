@@ -147,19 +147,15 @@ ggplot(Trees, aes(diameter, neighbourhood_name)) +
 #We can see how all the ridge plots for the tree daimeters for each neighbourhood are all right-skewed. This is expected because with such a variety of tree species present, there are going to be some that are much larger than the average tree. But It's right skewed becasue you cannot have a tree diameter lower that 0 but, theoretically, there is no upper limit.  
 ```
 
-# 3 potential Research Questions
+# 3 - 4 potential Research Questions
 
-### 3.1
-How does tree density vary in each neighbourhood?  
+### 1. How does tree density vary in each neighbourhood?
 
-### 3.2
-Are there patterns to the distribution of genus is Vancouver's neighbourhoods?
+### 2. Are there patterns to the distribution of evergreens vs. deciduous species in Vancouver's neighbourhoods?
 
-### 3.3
-Are there relationships, and are they different between genus, between year planted and diameter of tree?
+### 3. Are there relationships, and are they differences between genus, between the year planted and the diameter of the trees?
 
-### 3.4
-Are certain trees more likely to be found on specific streets in Vancouver? Are there other random relationships  such as taller trees being located on odd or even side street names? 
+### 4. Are certain trees more likely to be found on specific streets of Vancouver? Moreover, are there random patterns,  relationships such as taller trees being located on odd or even side street names?
 
 
 
