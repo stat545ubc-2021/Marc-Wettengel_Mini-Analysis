@@ -1,5 +1,0 @@
-"0","#Because each tree is attached to a neighbourhood, we can just find the count of neighbourhoods in the tree data set and use that as the count of trees. BUT, we want to first remove all NA observations from the neighbourhood_name variable and then do the count!"
-"0","Trees %>%"
-"0","  filter(!is.na(neighbourhood_name)) %>%"
-"0","  group_by(neighbourhood_name) %>%"
-"0","  count(neighbourhood_name)"
