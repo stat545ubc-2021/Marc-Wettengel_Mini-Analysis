@@ -1,0 +1,4 @@
+"0","#Want to create a new variable determining if the tree is an evergreen or a deciduous."
+"0","#evded is a combo of evergreen and deciduous"
+"0","evded$type <- as.factor(ifelse(evded$genus_name == c(""PINUS"", ""PICEA"", ""PSEUDOTSUGA"", ""CEDRUS"", ""SEQUOIADENDRON""), 'EVERGREEN','DECIDUOUS'))"
+"0","head(evded)"

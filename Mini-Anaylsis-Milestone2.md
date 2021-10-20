@@ -1,19 +1,26 @@
 Mini Data Analysis 2
 ================
 
-# Task 1: Process and sumarize data
+# Task 1: Process and Sumarize Data
 
-## 1.1 - Research questions from milestone 1
+## 1.1 - Research questions from Milestone 1
 
-### 1\. How does tree density vary in each neighbourhood?
+**1. How does tree density vary in each neighbourhood?**
 
-### 2\. Are there patterns to the height class of evergreens vs. deciduous species in Vancouver?
+**2. Are there patterns to the height class of evergreen vs. deciduous
+species in Vancouver?**
 
-### 3\. How does the number of trees planted change over time, and are there differences between genus or neighborhood?
+**3. How has the number of trees planted per year change over time, and
+are there differences between genus or neighborhood?**
 
-### 4\. Is there a relationship, if there is how strong is the correlation, between tree diameter and height class?
+**4. Is there a relationship, if there is how strong is the correlation,
+between tree diameter and height class?**
 
 ## 1.2 - Summarizing data for each research question
+
+For each research question I will select one option from the summarizing
+and graphing lists below and conduct a simple analysis to answer each of
+them.
 
 **Summarizing**
 
@@ -87,13 +94,13 @@ head(Trees)
 
 ### 1.2.1 Research Question 1
 
-**Question** How does tree density vary in each neighbourhood?
+**Question:** How does tree density vary in each neighbourhood?
 
-**Summarizing** 2. Compute the number of observations for at least one
+**Summarizing:** 2. Compute the number of observations for at least one
 of your categorical variables. Do not use the function table()\!
 
 ``` r
-#Because each tree is attached to a neighbourhood, we can just find the count of neighbourhoods in the tree data set and use that as the count of trees. BUT, we want to first remove all NA observations from the neighbourhood_name variable and then do the count!
+#Because each tree is attached to a neighbourhood value (name of neighbourhood), we can just find the count of each neighbourhood in the tree data set and use that as the count of trees. BUT, we want to first remove all NA observations from the neighbourhood_name variable and then do the count!
 Trees %>%
   filter(!is.na(neighbourhood_name)) %>%
   group_by(neighbourhood_name) %>%
@@ -116,12 +123,12 @@ Trees %>%
     ## 10 KITSILANO                 8115
     ## # ... with 12 more rows
 
-**Grpahing** 6. Create a graph of your choosing, make one of the axes
+**Grpahing:** 6. Create a graph of your choosing, make one of the axes
 logarithmic, and format the axes labels so that they are “pretty” or
 easier to read.
 
 ``` r
-#Now wanting to plot the counts of trees in each neighbourhood. When finding the density of trees, we first need to know the count of how many observations in each neighbourhood. Graphing helps us visualize the differences in neighbourhoods, but isn't conclusive (obviously) because we need to know the area of each neighbourhood. 
+#Plotting the counts of trees in each neighbourhood. When finding the density of trees, we first need to know the count of how many observations are in each neighbourhood. Graphing helps us visualize the differences in neighbourhoods, but isn't conclusive (obviously) because we need to know the area of each neighbourhood. 
 Trees %>%
   filter(!is.na(neighbourhood_name)) %>%
   ggplot() +
@@ -133,12 +140,16 @@ Trees %>%
 
 ![](Mini-Anaylsis-Milestone2_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
 
+``` r
+#In Milestone 3, I will calculate the neighbourhood size.
+```
+
 ### 1.2.2 Research Question 2
 
-**Question** Are there patterns to the height class of evergreens
+**Question:** Are there patterns to the height class of evergreens
 vs. deciduous species in Vancouver?
 
-**Summarizing** 1. Compute the range, mean, and two other summary
+**Summarizing:** 1. Compute the range, mean, and two other summary
 statistics of one numerical variable across the groups of one
 categorical variable from your data.
 
@@ -194,7 +205,7 @@ head(evded)
 ``` r
 #Summary statistics for both the deciduous and evergreen species that were randomly selected. 
 sumdec <- deciduous %>%
-  filter(!is.na(height_range_id)) %>% #remove all NA values if there are any
+  filter(!is.na(height_range_id)) %>% #remove all NA values if there are any in the height ID variable
   summarise(
     count = n(),
     mean = mean(height_range_id),
@@ -205,7 +216,7 @@ sumdec <- deciduous %>%
     )
 
 sumev <- evergreen %>%
-  filter(!is.na(height_range_id)) %>% #remove all NA values if there are any
+  filter(!is.na(height_range_id)) %>% #remove all NA values if there are any in height ID variable
   summarise(
     count = n(),
     mean = mean(height_range_id),
@@ -215,7 +226,7 @@ sumev <- evergreen %>%
     sd = sd(height_range_id)
     )
 
-sumevded <- rbind(sumdec, sumev)
+sumevded <- rbind(sumdec, sumev) #combine the summary stats for easy observations, differences or similarities between deciduous and evergreen genus's
 head(sumevded)
 ```
 
@@ -225,10 +236,11 @@ head(sumevded)
     ## 1  3609  3.66      4     1    10  1.79
     ## 2   501  3.78      4     1    10  1.90
 
-**Grpahing**
+**Grpahing:**
 
 ``` r
 #Want to create a new variable determining if the tree is an evergreen or a deciduous.
+#evded is a combo of evergreen and deciduous
 evded$type <- as.factor(ifelse(evded$genus_name == c("PINUS", "PICEA", "PSEUDOTSUGA", "CEDRUS", "SEQUOIADENDRON"), 'EVERGREEN','DECIDUOUS'))
 head(evded)
 ```
@@ -249,29 +261,31 @@ head(evded)
     ## #   longitude <dbl>, latitude <dbl>, Year <dbl>, type <fct>
 
 ``` r
-#side by side box plots between deciduous and evergreen species 
+#side by side box plots between deciduous and evergreen species for comparison. I included a geom_violin() function to see how similar the distributions of values are (patterns in density) between heights of evergreens and deciduous
 evded %>%
   filter(!is.na(height_range_id)) %>%
   filter(!is.na(type)) %>%
   ggplot(aes(x = height_range_id, y = type)) +
   geom_violin()+
-  geom_boxplot(width = 0.2)
+  geom_boxplot(width = 0.2) +
+  ggtitle("Comparison of heights between Evergreen and Deciduous species") +
+  xlab("Height Class ID")
 ```
 
 ![](Mini-Anaylsis-Milestone2_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
 
 ### 1.2.3 Research Question 3
 
-**Question** How does the number of trees planted change over time, and
+**Question:** How does the number of trees planted change over time, and
 are there differences between genus or neighborhood?
 
-**Summarizing** 2/3. Compute the number of observations for at least one
-of your categorical variables. Do not use the function table()\!
+**Summarizing:** 2/3. Compute the number of observations for at least
+one of your categorical variables. Do not use the function table()\!
 Additionally, create a categorical variable with 3 or more groups from
 an existing numerical variable.
 
 ``` r
-#finding out how many "old" trees there are.
+#creating three categories (bins) for the year the tree was planted
 evdednew <-evded %>% 
   filter(!is.na(height_range_id)) %>% 
   filter(!is.na(Year))
@@ -281,10 +295,11 @@ max(evded$Year)
     ## [1] NA
 
 ``` r
-evdednew$age <- as.factor(ifelse(evdednew$Year < 2000, "90s",
-                              ifelse(evdednew$Year < 2010, "00s",
-                              ifelse(evdednew$Year < 2020, "10s"))))       
+evdednew$age <- as.factor(ifelse(evdednew$Year < 1999, "90s",
+                              ifelse(evdednew$Year < 2009, "00s",
+                              ifelse(evdednew$Year < 2020, "10s")))) #chose 2020 to include 2019 value
 
+#chose these three bins because the oldest tree was planted in 1989 and the goungest was 2019, so three bins would each capture one third of the total time in the dataset. since 1989 is the first and 2019 is the last, the bins seem like weird dates
 evdednew %>% 
   group_by(type) %>%
   summarise(sum_of_old = sum(age == "90s"))
@@ -293,14 +308,14 @@ evdednew %>%
     ## # A tibble: 2 x 2
     ##   type      sum_of_old
     ##   <fct>          <int>
-    ## 1 DECIDUOUS        525
+    ## 1 DECIDUOUS        496
     ## 2 EVERGREEN          3
 
-**Grpahing** 5. Create a graph out of summarized variables that has at
+**Grpahing:** 5. Create a graph out of summarized variables that has at
 least two geom layers.
 
 ``` r
-#Using the subset data "evdednew" for this plot since there are so many NA values in the evded dataset and is why we went from 4110 observations to just 1145. Because of the vast amount of data missing, I would not recommend any further analysis with this research question!
+#Using a subset data of evded for this plot since there are so many NA values in the evded dataset and is why we went from 4110 observations to just 1145. Because of the vast amount of data missing, I would not recommend any further analysis with this research question! (cannot tell if it was random or if there is a pattern of NA values)
 
 
 ggplot(evdednew, aes(x = Year)) +
@@ -313,15 +328,15 @@ ggplot(evdednew, aes(x = Year)) +
 
 ### 1.2.4 Research Question 4
 
-**Question** Is there a relationship, if there is how strong is the
+**Question:** Is there a relationship, if there is how strong is the
 correlation, between tree diameter and height class?
 
-**Summarizing** 1. Compute the range, mean, and two other summary
+**Summarizing:** 1. Compute the range, mean, and two other summary
 statistics of one numerical variable across the groups of one
 categorical variable from your data.
 
 ``` r
-#this is not helpful but couldn't think of anything else to compute (that my skills allow)
+#This is not helpful but couldn't think of anything else to compute (that my skills allow at least)
 
 #remove outliers
 outliers <- boxplot.stats(evded$diameter)$out
@@ -333,7 +348,7 @@ evded %>%
   summarise(
     count = n(),
     mean = mean(diameter),
-    median = median(diameter),#categorical data so not a very good measure
+    median = median(diameter),
     min = min(diameter),
     max = max(diameter),
     sd = sd(diameter)
@@ -345,7 +360,7 @@ evded %>%
     ##   <int> <dbl>  <dbl> <dbl> <dbl> <dbl>
     ## 1    99  16.4     17     2  38.5  9.65
 
-**Grpahing**
+**Grpahing:**
 
 ``` r
 #creating a scatterplot to visualize the relationship between tree Diameter and the height class ID. 
@@ -356,10 +371,13 @@ evded %>%
   filter(!diameter %in% outliers) %>% #Filter out the outliers!
   ggplot(aes(height_range_id, diameter, color = type)) +
   geom_point(alpha = 0.6) + 
+  geom_smooth(method = "lm") + #adding in a linear regression line for decisuous and evergreen species
   ggtitle("Relationship between Height ID and Diameter of trees in Vancouver") +
   xlab("Height ID") +
-  ylab("Diameter (cm?)")
+  ylab("Diameter (cm?)") 
 ```
+
+    ## `geom_smooth()` using formula 'y ~ x'
 
 ![](Mini-Anaylsis-Milestone2_files/figure-gfm/unnamed-chunk-11-1.png)<!-- -->
 
@@ -376,25 +394,25 @@ Here are the 4 research question I had initially:
     between tree diameter and height class?
 
 Upon completing this milestone, I can eliminate one of my research
-questions I had prior to completing this assignment. Question 3 can be
-removed from my score because there are a lot of values in my subset of
-the **vancouver\_trees** data set that did not contain a date planted.
-After removing the observations without a year planted value, the length
-of the data set was approximately one fourth of the original. With so
-many observations lost, I cannot determine if there was a random
-distribution of trees without dates or if there was some limitation
-specific to a certain category of trees.
+questions I had prior to this assignment. Question 3 can be removed from
+my scope because there are a lot of values in my subset of the
+**vancouver\_trees** data set for the year variable that were missing.
+After removing the observations without a year value, the length of the
+data set was approximately one fourth of the original. With so many
+observations lost, I cannot determine if there was a random distribution
+of trees without dates or if there was some limitation specific to a
+certain category of trees or other variable present in the data set.
 
 Research question 1 is most interesting to me, however, the challenge
 will be finding the area for each neighbourhood in Vancouver. I have an
-idea on how to complete this (however not accurate) but will be good a
-exercise to further my skills in R and tidy data. Questions 1 and 4 are
-yielding the most interesting results to me and both pose unique, but
-intriguing challenges in my analysis project. I am much closer to
+idea on how to complete this (however not very accurate) but will be
+good a exercise to further my skills in R and tidy data. Questions 1 and
+4 are yielding the most interesting results to me and both pose unique,
+but intriguing challenges in my analysis project. I am much closer to
 answering these questions, I just need to overcome an obstacle in each
-anaylsis to yield a complete analysis.
+anaylsis to yield a complete result.
 
-# Tast 2: Tidy your data
+# Task 2: Tidy your data
 
 ## 2.1 Is my data Tidy?
 
@@ -427,7 +445,7 @@ head(vancouver_trees)
     ## #   longitude <dbl>, latitude <dbl>, year <date>, Year <dbl>
 
 ``` r
-#There are more than 8 columns, so I will select the 8 that I will most frequently use to answer my 2 research questions.
+#There are more than 8 columns, so I will select the 8 that I will most likely use to answer my 2 research questions of interest.
 
 
 vancouver_trees %>%
@@ -461,23 +479,23 @@ head(Vancity_trees)
 Now we can see if the dataset is tidy or not. We can answer the
 questions posed to us earlier:
 
-1.  Is each row an observation?
+**1. Is each row an observation?**
 
-**It is very clear that each row of this data set is an observation as
+It is very clear that each row of this data set is an observation as
 each row is a unique tree in the city of Vancouver, indicated by the
 unique tree ID number in the original dataset (I removed the variable
-because it wouldn’t be useful in my analysis)**
+because it wouldn’t be useful in my analysis)
 
-2.  Is each column a variable?
+**2. Is each column a variable?**
 
-**Each column represents a variable in this data set and each variable
-is independent (meaning it has it’s own row) in the data set.**
+Each column represents a variable in this data set and each variable is
+independent (meaning it has it’s own row) in the data set.
 
-3.  Is each cell a value?
+**3. Is each cell a value?**
 
-**Each cell contains a value (depending on the varible it’s either
+Each cell contains a value (depending on the varible it’s either
 categorical or continious) for each observation present in the data set,
-so this requirement for tidy data is met\!**
+so this requirement for tidy data is met\!
 
 ## 2.2 Untidy and retidy **Vancity\_trees**
 
@@ -601,14 +619,14 @@ glimpse(tidyvancity)
 
 The two research questions I will continue my analysis on are:
 
-1.  How does tree density vary in each neighbourhood?
+**1. How does tree density vary in each neighbourhood?**
 
-2.  Is there a relationship, if there is how strong is the correlation,
-    between tree diameter and height class?
+**4. Is there a relationship, if there is how strong is the correlation,
+between tree diameter and height class?**
 
-I chose both of these questions because partly I had to remove question
+I chose both of these questions partly because I had to remove question
 3 from my scope of interest due to the elimination of many observations
-after tidyign the dataset. Beyond that, these two questions pose the
+after tidying the data set. Beyond that, these two questions pose the
 most unique challenges to me, and have attributes I enjoy about them.
 I’ve only lived in Vancouver for a few months now and I noticed how
 each neighbourhood has a different distribution of trees and species and
@@ -617,7 +635,7 @@ Question 4 I want to analyze more because there are a lot of other
 questions that can stem from a correlation and scatterplot of tree
 diameter vs. height and so I want to further dive into this question.
 
-### Data set to use in milestone 3
+### Data set to use in Milestone 3
 
 ``` r
 #select all potential variables I may need to answer my questions in Milestone 3
@@ -654,11 +672,11 @@ vantreeQ1 <- vantreeM3 %>%
          longitude,
          latitude)
 
-#to find how many trees are present in each neighbourhood. Since every tree is attached to a neighbourgood I can just count each neighbourhood observation as a tree!
+# Finding how many trees are present in each neighbourhood. Since every tree is attached to a neighbourgood I can just count each neighbourhood observation as a tree!
 ntrees <- vantreeQ1 %>%
   group_by(neighbourhood_name) %>%
   count(neighbourhood_name)
-#Won't combine with other data set due to them being different lengths 
+#Won't combine with other data set due to them being different lengths, but us an organized wat to calculate counts!
 head(vantreeQ1)
 ```
 
@@ -678,6 +696,7 @@ head(vantreeQ1)
 #For question 4, want to remove diameter outliers since I noticed them earlier.
 outliersM3 <- boxplot.stats(vantreeM3$diameter)$out
 
+#also selecting the variables I will use in my analysis
 vantreeQ4 <- vantreeM3 %>%
   select(height_range_id,
          diameter,
