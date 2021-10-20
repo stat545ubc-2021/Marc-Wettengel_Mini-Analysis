@@ -1,0 +1,4 @@
+"0","#Want to begin by creating a column with just year (removing the month and day aspect to the date_planted variable)"
+"0","vancouver_trees$year <- as.Date(vancouver_trees$date_planted, format = ""%Y-%m-%d"")"
+"0","vancouver_trees$Year <- as.numeric(format(vancouver_trees$year, '%Y'))"
+"0","head(vancouver_trees)"

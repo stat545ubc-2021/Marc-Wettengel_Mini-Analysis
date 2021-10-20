@@ -1,0 +1,7 @@
+"0",""
+"0","#side by side box plots between deciduous and evergreen species "
+"0","evded %>%"
+"0","  filter(!is.na(height_range_id)) %>%"
+"0","  filter(!is.na(type)) %>%"
+"0","  ggplot(aes(x = height_range_id, y = type)) +"
+"0","  geom_boxplot()"
