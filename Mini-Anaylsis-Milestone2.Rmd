@@ -17,17 +17,248 @@ library(tidyverse)
 
 # Task 1: Process and sumarize data
 
-## 1.1 Research questions from milestone 1
+## 1.1 - Research questions from milestone 1
 
 ### 1. How does tree density vary in each neighbourhood?
 
-### 2. Are there patterns to the distribution of evergreens vs. deciduous species in Vancouver's neighbourhoods?
+### 2. Are there patterns to the height class of evergreens vs. deciduous species in Vancouver?
 
-### 3. Are there relationships, and are they differences between genus, between the year planted and the diameter of the trees?
+### 3. How does the number of trees planted change over time, and are there differences between genus or neighborhood?
 
-### 4. Are certain trees more likely to be found on specific streets of Vancouver? Moreover, are there random patterns,  relationships such as taller trees being located on odd or even side street names?
+### 4. Is there a relationship, if there is how strong is the correlation, between tree diameter and height class?
+
+## 1.2 - Summarizing data for each research question 
+
+**Summarizing**
+
+1. Compute the range, mean, and two other summary statistics of one numerical variable across the groups of one categorical variable from your data.
+2. Compute the number of observations for at least one of your categorical variables. Do not use the function table()!
+3. Create a categorical variable with 3 or more groups from an existing numerical variable. You can use this new variable in the other tasks! An example: age in years into “child, teen, adult, senior”.
+4. Based on two categorical variables, calculate two summary statistics of your choosing.
+
+**Graphing**
+
+5. Create a graph out of summarized variables that has at least two geom layers.
+6. Create a graph of your choosing, make one of the axes logarithmic, and format the axes labels so that they are “pretty” or easier to read.
+7. Make a graph where it makes sense to customize the alpha transparency.
+8. Create 3 histograms out of summarized variables, with each histogram having different sized bins. Pick the “best” one and explain why it is the best.
+
 
 
 ```{r}
+#Want to begin by creating a column with just year (removing the month and day aspect to the date_planted variable)
+vancouver_trees$year <- as.Date(vancouver_trees$date_planted, format = "%Y-%m-%d")
+vancouver_trees$Year <- as.numeric(format(vancouver_trees$year, '%Y'))
+head(vancouver_trees)
+Trees <-subset(vancouver_trees, select = -c(year))
+head(Trees)
+```
+
+### 1.2.1 Research Question 1
+
+**Question** How does tree density vary in each neighbourhood?
+
+**Summarizing** 2. Compute the number of observations for at least one of your categorical variables. Do not use the function table()! 
+
+```{r}
+#Because each tree is attached to a neighbourhood, we can just find the count of neighbourhoods in the tree data set and use that as the count of trees. BUT, we want to first remove all NA observations from the neighbourhood_name variable and then do the count!
+Trees %>%
+  filter(!is.na(neighbourhood_name)) %>%
+  group_by(neighbourhood_name) %>%
+  count(neighbourhood_name)
+  
+```
+
+**Grpahing** 6. Create a graph of your choosing, make one of the axes logarithmic, and format the axes labels so that they are “pretty” or easier to read.
+
+```{r}
+#Now wanting to plot the counts of trees in each neighbourhood. When finding the density of trees, we first need to know the count of how many observations in each neighbourhood. Graphing helps us visualize the differences in neighbourhoods, but isn't conclusive (obviously) because we need to know the area of each neighbourhood. 
+Trees %>%
+  filter(!is.na(neighbourhood_name)) %>%
+  ggplot() +
+  geom_bar(aes(y = neighbourhood_name)) +
+  ggtitle("Tree Count in Vancouver Neighbourhoods") +
+  ylab("Neighbourhood Name") +
+  xlab("Number of Trees")
+
+
+  
+```
+
+### 1.2.2 Research Question 2
+
+**Question** Are there patterns to the height class of evergreens vs. deciduous species in Vancouver?
+
+**Summarizing** 1. Compute the range, mean, and two other summary statistics of one numerical variable across the groups of one categorical variable from your data. 
+
+```{r}
+# Due to the vast number of species of trees, I'm going to randomly select 5 genus's of deciduous and 5 genus's of evergreen species to compare.
+deciduous <- Trees %>% filter(genus_name == c("QUERCUS", "ULMUS", "CORNUS", "KOELREUTERIA", "TILIA"))
+  
+evergreen <- Trees %>% filter(genus_name == c("PICEA", "PINUS", "PSEUDOTSUGA", "CEDRUS", "SEQUOIADENDRON"))
+unique(deciduous$genus_name)
+unique(evergreen$genus_name)
+
+evded <- rbind(deciduous, evergreen)
+head(evded)
+```
+
+```{r}
+#Summary statistics for both the deciduous and evergreen species that were randomly selected. 
+sumdec <- deciduous %>%
+  filter(!is.na(height_range_id)) %>% #remove all NA values if there are any
+  summarise(
+    count = n(),
+    mean = mean(height_range_id),
+    median = median(height_range_id),#categorical data so not a very good measure
+    min = min(height_range_id),
+    max = max(height_range_id),
+    sd = sd(height_range_id)
+    )
+
+sumev <- evergreen %>%
+  filter(!is.na(height_range_id)) %>% #remove all NA values if there are any
+  summarise(
+    count = n(),
+    mean = mean(height_range_id),
+    median = median(height_range_id),
+    min = min(height_range_id),
+    max = max(height_range_id),
+    sd = sd(height_range_id)
+    )
+
+sumevded <- rbind(sumdec, sumev)
+head(sumevded)
+```
+
+**Grpahing**
+
+```{r}
+#Want to create a new variable determining if the tree is an evergreen or a deciduous.
+evded$type <- as.factor(ifelse(evded$genus_name == c("PINUS", "PICEA", "PSEUDOTSUGA", "CEDRUS", "SEQUOIADENDRON"), 'EVERGREEN','DECIDUOUS'))
+head(evded)
+
+#side by side box plots between deciduous and evergreen species 
+evded %>%
+  filter(!is.na(height_range_id)) %>%
+  filter(!is.na(type)) %>%
+  ggplot(aes(x = height_range_id, y = type)) +
+  geom_boxplot()
+```
+
+```{r, include = FALSE}
+#one sec folks... 
+evded <- evded %>% 
+  filter(!is.na(height_range_id)) %>% 
+  filter(!is.na(Year))
+
+min(evded$Year)
+
+evded$age <- as.factor(ifelse(evded$Year < 2000, "OLD","YOUNG"))
+head(evded)
+
+
+#Need to finish this, trying something weird but gotta ask the prof about what to do 
+par(mfrow = c(1,2))
+evded %>%
+  group_by()
+  ggplot(aes(x = height_range_id, y = type)) +
+  geom_boxplot()
+evded %>%
+  ggplot(aes(x = height_range_id, y = type)) +
+  geom_boxplot()
 
 ```
+
+### 1.2.3 Research Question 3
+
+**Question** How does the number of trees planted change over time, and are there differences between genus or neighborhood?
+
+**Summarizing** 2. Compute the number of observations for at least one of your categorical variables. Do not use the function table()!
+
+```{r}
+evded$age <- as.factor(ifelse(evded$Year < 2000, "OLD","YOUNG"))
+
+evded %>% 
+  group_by(type) %>%
+  summarise(sum_of_old = sum(age == "OLD"))
+
+```
+
+**Grpahing**
+
+```{r}
+# scatterplot and line of best fit, remember to remove ouliers
+```
+
+### 1.2.4 Research Question 4
+
+**Question** Is there a relationship, if there is how strong is the correlation, between tree diameter and height class?
+
+**Summarizing** 1. Compute the range, mean, and two other summary statistics of one numerical variable across the groups of one categorical variable from your data.
+
+```{r}
+#summary stats for tree diameter for kerrisdale (talk about why this doesnt help at all)
+```
+
+**Grpahing**
+
+```{r}
+# correlation plot duh make it pretty
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
