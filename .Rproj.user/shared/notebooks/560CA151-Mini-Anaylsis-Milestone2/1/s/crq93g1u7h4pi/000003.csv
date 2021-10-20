@@ -1,0 +1,23 @@
+"0","glimpse(tidyvancity)
+"
+"1","Rows: 1,292,104"
+"1",""
+"1","
+"
+"1","Columns: 10"
+"1",""
+"1","
+"
+"1","$ genus_name         [3m[38;5;246m<chr>[39m[23m ""ULMUS"", ""ULMUS"", ""ULMUS"", ""ULMUS"", ""ULMUS"", ""ULMUS"", ""ULMUS"", ""ULMUS"", ""ULMUS"", ""U~
+$ species_name       [3m[38;5;246m<chr>[39m[23m ""AMERICANA"", ""AMERICANA"", ""AMERICANA"", ""AMERICANA"", ""AMERICANA"", ""AMERICANA"", ""AMER~
+$ common_name        [3m[38;5;246m<chr>[39m[23m ""BRANDON ELM"", ""BRANDON ELM"", ""BRANDON ELM"", ""BRANDON ELM"", ""BRANDON ELM"", ""BRANDON~
+$ diameter           [3m[38;5;246m<dbl>[39m[23m 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,~
+$ date_planted       [3m[38;5;246m<date>[39m[23m 1999-01-13, 1999-01-13, 1999-01-13, 1999-01-13, 1999-01-13, 1999-01-13, 1999-01-13~
+$ longitude          [3m[38;5;246m<dbl>[39m[23m -123.1161, -123.1161, -123.1161, -123.1161, -123.1161, -123.1161, -123.1161, -123.1~
+$ latitude           [3m[38;5;246m<dbl>[39m[23m 49.21776, 49.21776, 49.21776, 49.21776, 49.21776, 49.21776, 49.21776, 49.21776, 49.~
+$ year               [3m[38;5;246m<date>[39m[23m 1999-01-13, 1999-01-13, 1999-01-13, 1999-01-13, 1999-01-13, 1999-01-13, 1999-01-13~
+$ neighbourhood_name [3m[38;5;246m<chr>[39m[23m ""MARPOLE"", ""KENSINGTON-CEDAR COTTAGE"", ""OAKRIDGE"", ""MOUNT PLEASANT"", ""RENFREW-COLLI~
+$ height_range_id    [3m[38;5;246m<list>[39m[23m 2, <NULL>, <NULL>, <NULL>, <NULL>, <NULL>, <NULL>, <NULL>, <NULL>, <NULL>, <NULL>,~"
+"1",""
+"1","
+"
