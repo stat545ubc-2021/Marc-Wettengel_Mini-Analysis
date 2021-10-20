@@ -147,28 +147,6 @@ evded %>%
   geom_boxplot(width = 0.2)
 ```
 
-```{r, include = FALSE}
-#one sec folks... 
-evdednew <-evded %>% 
-  filter(!is.na(height_range_id)) %>% 
-  filter(!is.na(Year))
-
-
-evded$age <- as.factor(ifelse(evded$Year < 2000, "OLD","YOUNG"))
-head(evded)
-
-
-#Need to finish this, trying something weird but gotta ask the prof about what to do 
-par(mfrow = c(1,2))
-evded %>%
-  group_by()
-  ggplot(aes(x = height_range_id, y = type)) +
-  geom_boxplot()
-evded %>%
-  ggplot(aes(x = height_range_id, y = type)) +
-  geom_boxplot()
-
-```
 
 ### 1.2.3 Research Question 3
 
@@ -179,6 +157,9 @@ evded %>%
 
 ```{r}
 #finding out how many "old" trees there are.
+evdednew <-evded %>% 
+  filter(!is.na(height_range_id)) %>% 
+  filter(!is.na(Year))
 max(evded$Year)
 evdednew$age <- as.factor(ifelse(evdednew$Year < 2000, "90s",
                               ifelse(evdednew$Year < 2010, "00s",
