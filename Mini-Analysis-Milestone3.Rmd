@@ -1,0 +1,17 @@
+---
+title: "Mini Data Analysis 3"
+Author: "Marc Wettengel"
+Date: "October 16, 2021"
+output: github_document 
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, include = FALSE}
+# load necessary packages
+library(datateachr)
+library(tidyverse)
+```
+
