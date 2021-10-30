@@ -1,7 +1,0 @@
-"0","#Using a subset data of evded for this plot since there are so many NA values in the evded dataset and is why we went from 4110 observations to just 1145. Because of the vast amount of data missing, I would not recommend any further analysis with this research question! (cannot tell if it was random or if there is a pattern of NA values)"
-"0",""
-"0",""
-"0","ggplot(evdednew, aes(x = Year)) +"
-"0","  geom_bar(color = ""black"", aes(fill = age)) +"
-"0","  ggtitle(""Number of trees planted each year in Vancouver Neighbourhoods"") +"
-"0","  ylab(""Count"")"

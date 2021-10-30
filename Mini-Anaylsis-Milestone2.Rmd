@@ -216,6 +216,7 @@ evded %>%
     max = max(diameter),
     sd = sd(diameter)
     )
+head(evded)
 ```
 
 **Grpahing:**
