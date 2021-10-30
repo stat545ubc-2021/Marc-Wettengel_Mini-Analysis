@@ -360,6 +360,25 @@ evded %>%
     ##   <int> <dbl>  <dbl> <dbl> <dbl> <dbl>
     ## 1    99  16.4     17     2  38.5  9.65
 
+``` r
+head(evded)
+```
+
+    ## # A tibble: 6 x 22
+    ##   tree_id civic_number std_street      genus_name species_name cultivar_name
+    ##     <dbl>        <dbl> <chr>           <chr>      <chr>        <chr>        
+    ## 1  155413         2485 W BROADWAY      ULMUS      AMERICANA    BRANDON      
+    ## 2  155577         3034 E KENT AV SOUTH TILIA      EUCHLORA   X <NA>         
+    ## 3  156425         2268 E 44TH AV       QUERCUS    ACUTISSIMA   <NA>         
+    ## 4  157359         1497 E 33RD AV       QUERCUS    ROBUR        SKYMASTER    
+    ## 5  158100         1225 SEYMOUR ST      TILIA      CORDATA      <NA>         
+    ## 6  158450         1221 W CORDOVA ST    QUERCUS    COCCINEA     <NA>         
+    ## # ... with 16 more variables: common_name <chr>, assigned <chr>,
+    ## #   root_barrier <chr>, plant_area <chr>, on_street_block <dbl>,
+    ## #   on_street <chr>, neighbourhood_name <chr>, street_side_name <chr>,
+    ## #   height_range_id <dbl>, diameter <dbl>, curb <chr>, date_planted <date>,
+    ## #   longitude <dbl>, latitude <dbl>, Year <dbl>, type <fct>
+
 **Grpahing:**
 
 ``` r

@@ -1,2 +1,0 @@
-"0","Trees <-subset(vancouver_trees, select = -c(year))"
-"0","head(Trees)"
