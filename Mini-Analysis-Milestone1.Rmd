@@ -11,7 +11,7 @@ output: github_document
 ## 1.1
 ```{r, include = FALSE}
 library(datateachr)
-library(tidyverse)
+library(tidyverse) 
 library(dplyr)
 library(ggplot2)
 ```
@@ -30,6 +30,7 @@ head(vancouver_trees)
 glimpse(vancouver_trees)
 unique(vancouver_trees)
 ```
+
 ```{r}
 
 unique(vancouver_trees$neighbourhood_name)
