@@ -1,0 +1,8 @@
+"0","#plotting the data with regression model"
+"0","vantree1_final %>%"
+"0","  ggplot(aes(Areakm, n)) +"
+"0","  geom_point()+"
+"0","  geom_smooth(method = ""lm"") +"
+"0","  ggtitle(""Relationship between neighbourhood area and count of trees"") +"
+"0","  xlab(""Neighbourhood area km^2"") +"
+"0","  ylab(""Tree count"")"
