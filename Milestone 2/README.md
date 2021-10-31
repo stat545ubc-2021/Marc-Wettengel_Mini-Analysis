@@ -6,4 +6,4 @@
 ### Files incldued:
 - `Mini-Analysis-Milestone2.md:` Markdown file created when knitting the .Rmd file. Markdown file is final published version of Milestone 2 analysis.
 - `Mini-Analysis-Milestone2.Rmd:` R Markdown file containing code and comments for Milestone 2.
-- `Mini-Analysis-Milestone2_files/figures-gfm:` This folder contains immages and plots used when viewing the .md file. 
+- `Mini-Analysis-Milestone2_files/figures-gfm:` This folder contains images and plots used when viewing the .md file. 
