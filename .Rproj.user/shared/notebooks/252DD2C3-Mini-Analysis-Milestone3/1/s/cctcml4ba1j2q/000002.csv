@@ -1,8 +1,0 @@
-"0","#Plotting the counts of trees in each neighbourhood. When finding the density of trees, we first need to know the count of how many observations are in each neighbourhood. Graphing helps us visualize the differences in neighbourhoods, but isn't conclusive (obviously) because we need to know the area of each neighbourhood. "
-"0","Trees %>%"
-"0","  filter(!is.na(neighbourhood_name)) %>%"
-"0","  ggplot() +"
-"0","  geom_bar(aes(y = neighbourhood_name)) +"
-"0","  ggtitle(""Tree Count in Vancouver Neighbourhoods"") +"
-"0","  ylab(""Neighbourhood Name"") +"
-"0","  xlab(""Number of Trees"")"
